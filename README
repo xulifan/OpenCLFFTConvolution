@@ -1,6 +1,6 @@
 This simple program does FFT based convolution using OpenCL. It adapts code from CUDA and C implementations found here:
     CUDA implementation: https://github.com/andersbll/theano_ops/blob/master/theano_ops/abll/src/abll/conv_bc01_fft.cu#L185
-    C implementation://github.com/jeremyfix/FFTConvolution
+    C implementation: https://github.com/jeremyfix/FFTConvolution
 
 FFT based convolution algorithm:
         1. find the factor size
