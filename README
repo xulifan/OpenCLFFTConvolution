@@ -1,0 +1,20 @@
+This simple program does FFT based convolution using OpenCL. It adapts code from CUDA and C implementations found here:
+    CUDA implementation: https://github.com/andersbll/theano_ops/blob/master/theano_ops/abll/src/abll/conv_bc01_fft.cu#L185
+    C implementation://github.com/jeremyfix/FFTConvolution
+
+FFT based convolution algorithm:
+        1. find the factor size
+        2. pad both image and filter to the fatcor size
+        3. flip the filter
+        4. FFT on image and filter (using batched 2D FFT, batch size is n_img*n_channel for images and n_filter*n_channel for filters)
+        Loop through n_img * n_filter (the loop can be done usint batched gemm like cublasCgemmBatched, but it is not supported in clBLAS):
+            5. dot product on one image and one filter
+            6. sum across channels for dot product
+            7. iFFT on the dot product sum
+            8. extract "same" convolution results from "full" convolution results
+        Loop End
+
+To compile the code, modify the Makefile accordingly, and type "make"
+You can run the code by "make test"
+Or you can run the code with your input:
+    ./main.exe n_img n_channel img_h img_w kernel_size stride n_filter
